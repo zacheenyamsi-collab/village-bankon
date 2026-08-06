@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5mg54326l0_glwjlm70$0y+i2*=v%os#^_9e@a7$47+_knqisi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'village.urls'
@@ -138,6 +139,9 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',  # Répertoire pour vos fichiers statiques
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # Répertoire pour la collecte de fichiers
+STATICFILES_STORAGE = (
+    "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
 
 
 
