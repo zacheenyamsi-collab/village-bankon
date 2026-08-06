@@ -1,0 +1,31 @@
+﻿# Django
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Bases de données locales
+*.sqlite3
+db.sqlite3
+
+# Environnements virtuels
+venv/
+env/
+myenv/
+
+# Fichiers statiques générés par collectstatic
+staticfiles/
+
+# Fichiers média locaux
+media/
+
+# Variables d'environnement et secrets
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Fichiers système
+Thumbs.db
+.DS_Store

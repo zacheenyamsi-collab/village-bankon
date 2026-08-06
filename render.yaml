@@ -1,0 +1,25 @@
+﻿services:
+  - type: web
+    name: village-bankon
+    runtime: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn village.wsgi:application
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: village-bankon-db
+          property: connectionString
+
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+
+      - key: DJANGO_DEBUG
+        value: "False"
+
+      - key: WEB_CONCURRENCY
+        value: "2"
+
+databases:
+  - name: village-bankon-db
+    databaseName: village_bankon
+    user: village_bankon
