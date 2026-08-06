@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-5mg54326l0_glwjlm70$0y+i2*=v%os#^_9e@a7$47+_knqisi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "village-bankon.onrender.com",
+    ]
 
 
 
