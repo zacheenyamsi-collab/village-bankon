@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5mg54326l0_glwjlm70$0y+i2*=v%os#^_9e@a7$47+_knqisi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['arnombende.pythonanywhere.com']
 
 
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -77,14 +78,13 @@ WSGI_APPLICATION = 'village.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
- 
-        'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'village',         # Nom de ta base de données MySQL
-        'USER': 'root',               # Nom d’utilisateur MySQL
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+    'default':{
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'village',
+    'USER': 'root',
+    'PASSWORD': '',
+    'HOST': '127.0.0.1',
+    'PORT': '3306',
     }
     ,
 
@@ -142,29 +142,53 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'  # Répertoire pour la collecte de fichie
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://35d7-154-72-162-44.ngrok-free.app',
-    'http://127.0.0.1:8000',
-]
+# ============================================================
+# AUTHENTIFICATION
+# ============================================================
+
+LOGIN_URL = '/connexion/'
+LOGIN_REDIRECT_URL = '/actualites/'
+LOGOUT_REDIRECT_URL = '/connexion/'
+
+
+# ============================================================
+# HÔTES AUTORISÉS
+# ============================================================
 
 ALLOWED_HOSTS = [
-    'localhost',
     '127.0.0.1',
-    '35d7-154-72-162-44.ngrok-free.app',
+    'localhost',
+    'arnombende.pythonanywhere.com',
 ]
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
-import pymysql
-pymysql.install_as_MySQLdb()
+
+# ============================================================
+# CSRF
+# ============================================================
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
+    'https://35d7-154-72-162-44.ngrok-free.app',
+]
+
+
+# ============================================================
+# EMAIL
+# ============================================================
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'mbendrarno@gmail.com'
-EMAIL_HOST_PASSWORD = 'ujys etyn zgpr mwbw'
 
+EMAIL_HOST_USER = 'tonadresse@gmail.com'
+EMAIL_HOST_PASSWORD = 'mot_de_passe_application'
 
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
