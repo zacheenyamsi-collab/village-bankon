@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-5mg54326l0_glwjlm70$0y+i2*=v%os#^_9e@a7$47+_knqisi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "village-bankon.onrender.com",
+]
 
 
 
@@ -143,14 +147,16 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'  # Répertoire pour la collecte de fichie
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://35d7-154-72-162-44.ngrok-free.app',
-    'http://127.0.0.1:8000',
+    "https://35d7-154-72-162-44.ngrok-free.app",
+    "http://127.0.0.1:8000",
+    "https://village-bankon.onrender.com",
 ]
 
 ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '35d7-154-72-162-44.ngrok-free.app',
+    "localhost",
+    "127.0.0.1",
+    "35d7-154-72-162-44.ngrok-free.app",
+    "village-bankon.onrender.com",
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
