@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block title %}Actualités{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5">
+
+```
+<!-- ===================================================== -->
+<!-- EN-TÊTE -->
+<!-- ===================================================== -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="mb-1">
+            Actualités du Village
+        </h2>
+
+        <p class="text-muted mb-0">
+            Retrouvez les dernières informations et événements.
+        </p>
+    </div>
+
+
+    {% if user.is_superuser %}
+
+        <a
+            href="{% url 'ajouter_actualite' %}"
+            class="btn btn-primary"
+        >
+            + Ajouter une actualité
+        </a>
+
+    {% endif %}
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- LISTE DES ACTUALITÉS -->
+<!-- ===================================================== -->
+
+{% for actualite in actualites %}
+
+    <div class="card mb-4 shadow-sm border-0">
+
+
+        <!-- ================================================= -->
+        <!-- IMAGE -->
+        <!-- ================================================= -->
+
+        {% if actualite.image %}
+
+            <div class="text-center bg-light">
+
+                <img
+                    src="{{ actualite.image.url }}"
+                    class="img-fluid rounded-top"
+                    alt="{{ actualite.titre }}"
+                    style="
+                        max-height: 500px;
+                        width: 100%;
+                        object-fit: cover;
+                    "
+                >
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- ================================================= -->
+        <!-- CONTENU -->
+        <!-- ================================================= -->
+
+        <div class="card-body p-4">
+
+            <h3 class="card-title mb-2">
+                {{ actualite.titre }}
+            </h3>
+
+
+            <p class="text-muted small mb-3">
+
+                <i class="bi bi-calendar3"></i>
+
+                Publié le
+                {{ actualite.date_pub|date:"d/m/Y à H:i" }}
+
+            </p>
+
+
+            <div class="card-text">
+
+                {{ actualite.contenu|linebreaksbr }}
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- VIDÉO -->
+            <!-- ================================================= -->
+
+            {% if actualite.video %}
+
+                <div class="mt-4">
+
+                    <h6 class="fw-bold mb-2">
+                        Vidéo
+                    </h6>
+
+                    <video
+                        controls
+                        preload="metadata"
+                        class="w-100 rounded shadow-sm"
+                        style="max-height: 500px;"
+                    >
+
+                        <source
+                            src="{{ actualite.video.url }}"
+                        >
+
+                        Votre navigateur ne supporte pas la lecture
+                        de cette vidéo.
+
+                    </video>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ================================================= -->
+            <!-- ACTIONS ADMINISTRATEUR -->
+            <!-- ================================================= -->
+
+            {% if user.is_superuser %}
+
+                <div class="border-top mt-4 pt-3">
+
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <a
+                            href="{% url 'modifier_actualite' actualite.id %}"
+                            class="btn btn-warning"
+                        >
+                            Modifier
+                        </a>
+
+
+                        <form
+                            method="POST"
+                            action="{% url 'supprimer_actualite' actualite.id %}"
+                            class="d-inline"
+                            onsubmit="
+                                return confirm(
+                                    'Voulez-vous vraiment supprimer cette actualité ?'
+                                );
+                            "
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger"
+                            >
+                                Supprimer
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+{% empty %}
+
+    <!-- ================================================= -->
+    <!-- AUCUNE ACTUALITÉ -->
+    <!-- ================================================= -->
+
+    <div class="alert alert-info shadow-sm">
+
+        <strong>Aucune actualité disponible.</strong>
+
+        <br>
+
+        Les nouvelles informations du village seront publiées ici.
+
+    </div>
+
+{% endfor %}
+```
+
+</div>
+
+{% endblock %}

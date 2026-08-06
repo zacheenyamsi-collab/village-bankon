@@ -1,0 +1,812 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Mon profil - Village BANKON
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- =====================================================
+         EN-TÊTE
+    ===================================================== -->
+
+    <div class="mb-4">
+
+        <h1 class="page-title">
+            👤 Mon profil
+        </h1>
+
+        <p class="text-muted">
+            Consultez et modifiez vos informations personnelles.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         MESSAGES
+    ===================================================== -->
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show">
+
+                {{ message }}
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+                </button>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    <div class="row g-4">
+
+
+        <!-- =================================================
+             RÉSUMÉ DU PROFIL
+        ================================================= -->
+
+        <div class="col-lg-4">
+
+            <div class="card profile-card border-0 shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="text-center mb-4">
+
+                        <!-- Avatar -->
+
+                        <div class="profile-avatar">
+                            {{ personnel.nom|first|upper }}
+                        </div>
+
+                        <h4 class="fw-bold mt-3 mb-1">
+                            {{ personnel.nom }}
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            {{ personnel.gmail }}
+                        </p>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <!-- Téléphone -->
+
+                    <div class="profile-info">
+
+                        <div class="info-icon">
+                            📞
+                        </div>
+
+                        <div>
+
+                            <small class="text-muted">
+                                Téléphone
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ personnel.tel|default:"Non renseigné" }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Date de naissance -->
+
+                    <div class="profile-info">
+
+                        <div class="info-icon">
+                            🎂
+                        </div>
+
+                        <div>
+
+                            <small class="text-muted">
+                                Date de naissance
+                            </small>
+
+                            <div class="fw-semibold">
+
+                                {% if personnel.daten %}
+                                    {{ personnel.daten|date:"d/m/Y" }}
+                                {% else %}
+                                    Non renseignée
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Niveau -->
+
+                    <div class="profile-info">
+
+                        <div class="info-icon">
+                            🎓
+                        </div>
+
+                        <div>
+
+                            <small class="text-muted">
+                                Niveau d'étude
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ personnel.niveaup|default:"Non renseigné" }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Famille -->
+
+                    <div class="profile-info">
+
+                        <div class="info-icon">
+                            👨‍👩‍👧
+                        </div>
+
+                        <div>
+
+                            <small class="text-muted">
+                                Situation familiale
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ personnel.famille|default:"Non renseignée" }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Résidence -->
+
+                    <div class="profile-info">
+
+                        <div class="info-icon">
+                            🏠
+                        </div>
+
+                        <div>
+
+                            <small class="text-muted">
+                                Résidence
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ personnel.residence|default:"Non renseignée" }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Village -->
+
+                    <div class="profile-info">
+
+                        <div class="info-icon">
+                            📍
+                        </div>
+
+                        <div>
+
+                            <small class="text-muted">
+                                Village
+                            </small>
+
+                            <div class="fw-semibold">
+
+                                {% if personnel.ville %}
+                                    {{ personnel.ville.nomv }}
+                                {% else %}
+                                    Non renseigné
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Métiers -->
+
+                    <div class="profile-info">
+
+                        <div class="info-icon">
+                            💼
+                        </div>
+
+                        <div>
+
+                            <small class="text-muted">
+                                Métier(s)
+                            </small>
+
+                            <div class="fw-semibold">
+
+                                {% for metier in personnel.metier.all %}
+
+                                    <span class="badge bg-primary me-1 mb-1">
+                                        {{ metier.nomm }}
+                                    </span>
+
+                                {% empty %}
+
+                                    Aucun métier renseigné.
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CV -->
+
+                    <div class="profile-info">
+
+                        <div class="info-icon">
+                            📄
+                        </div>
+
+                        <div>
+
+                            <small class="text-muted">
+                                Curriculum Vitae
+                            </small>
+
+                            <div>
+
+                                {% if personnel.cv %}
+
+                                    <a
+                                        href="{{ personnel.cv.url }}"
+                                        target="_blank"
+                                        class="btn btn-sm btn-outline-primary mt-1"
+                                    >
+                                        📄 Voir mon CV
+                                    </a>
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        Aucun CV enregistré
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FORMULAIRE DE MODIFICATION
+        ================================================= -->
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex align-items-center mb-4">
+
+                        <div class="edit-icon">
+                            ✏️
+                        </div>
+
+                        <div>
+
+                            <h4 class="fw-bold mb-1">
+                                Modifier mes informations
+                            </h4>
+
+                            <p class="text-muted mb-0">
+                                Modifiez vos informations puis cliquez sur
+                                « Enregistrer ».
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <!-- Erreurs générales -->
+
+                        {% if form.non_field_errors %}
+
+                            <div class="alert alert-danger">
+
+                                {{ form.non_field_errors }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="row g-3">
+
+
+                            <!-- =========================
+                                 NOM
+                            ========================== -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Nom complet
+                                </label>
+
+                                {{ form.nom }}
+
+                                {% if form.nom.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.nom.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =========================
+                                 TÉLÉPHONE
+                            ========================== -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Téléphone
+                                </label>
+
+                                {{ form.tel }}
+
+                                {% if form.tel.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.tel.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =========================
+                                 EMAIL
+                            ========================== -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Adresse e-mail
+                                </label>
+
+                                {{ form.gmail }}
+
+                                {% if form.gmail.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.gmail.errors }}
+                                    </div>
+                                {% endif %}
+
+                                <small class="text-muted">
+                                    Cette adresse est utilisée pour votre
+                                    connexion.
+                                </small>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 DATE DE NAISSANCE
+                            ========================== -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Date de naissance
+                                </label>
+
+                                {{ form.daten }}
+
+                                {% if form.daten.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.daten.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =========================
+                                 NIVEAU
+                            ========================== -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Niveau d'étude
+                                </label>
+
+                                {{ form.niveaup }}
+
+                                {% if form.niveaup.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.niveaup.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =========================
+                                 FAMILLE
+                            ========================== -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Situation familiale
+                                </label>
+
+                                {{ form.famille }}
+
+                                {% if form.famille.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.famille.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =========================
+                                 RÉSIDENCE
+                            ========================== -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Résidence
+                                </label>
+
+                                {{ form.residence }}
+
+                                {% if form.residence.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.residence.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =========================
+                                 VILLE
+                            ========================== -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Village
+                                </label>
+
+                                {{ form.ville }}
+
+                                {% if form.ville.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.ville.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =========================
+                                 MÉTIERS
+                            ========================== -->
+
+                            <div class="col-12">
+
+                                <label class="form-label">
+                                    Métier(s)
+                                </label>
+
+                                {{ form.metier }}
+
+                                {% if form.metier.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.metier.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =========================
+                                 CV
+                            ========================== -->
+
+                            <div class="col-12">
+
+                                <label class="form-label">
+                                    Curriculum Vitae
+                                </label>
+
+                                {{ form.cv }}
+
+                                {% if form.cv.errors %}
+                                    <div class="text-danger small">
+                                        {{ form.cv.errors }}
+                                    </div>
+                                {% endif %}
+
+                                {% if personnel.cv %}
+
+                                    <div class="mt-2">
+
+                                        <span class="text-muted">
+                                            CV actuel :
+                                        </span>
+
+                                        <a
+                                            href="{{ personnel.cv.url }}"
+                                            target="_blank"
+                                            class="btn btn-sm btn-outline-secondary"
+                                        >
+                                            📄 Consulter
+                                        </a>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             BOUTONS
+                        ================================================= -->
+
+                        <hr class="my-4">
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <a
+                                href="{% url 'pagea' %}"
+                                class="btn btn-light border"
+                            >
+                                Annuler
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary px-4"
+                            >
+                                💾 Enregistrer les modifications
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+/* =====================================================
+   CARTE PROFIL
+===================================================== */
+
+.profile-card {
+    border-radius: 16px;
+}
+
+
+/* =====================================================
+   AVATAR
+===================================================== */
+
+.profile-avatar {
+
+    width: 110px;
+    height: 110px;
+
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #1261d8,
+        #4f8df7
+    );
+
+    color: white;
+
+    font-size: 48px;
+    font-weight: 700;
+
+    box-shadow:
+        0 5px 15px rgba(18, 97, 216, 0.25);
+}
+
+
+/* =====================================================
+   INFORMATIONS
+===================================================== */
+
+.profile-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.info-icon {
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf4ff;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+
+}
+
+
+/* =====================================================
+   ICÔNE FORMULAIRE
+===================================================== */
+
+.edit-icon {
+
+    width: 48px;
+    height: 48px;
+
+    margin-right: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf4ff;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+
+}
+
+
+/* =====================================================
+   FORMULAIRE
+===================================================== */
+
+.form-label {
+
+    font-weight: 600;
+
+    color: #374151;
+
+    margin-bottom: 6px;
+
+}
+
+
+.form-control,
+.form-select {
+
+    min-height: 45px;
+
+    border-radius: 8px;
+
+    border: 1px solid #d9dee7;
+
+}
+
+
+.form-control:focus,
+.form-select:focus {
+
+    border-color: #1261d8;
+
+    box-shadow:
+        0 0 0 0.2rem rgba(18, 97, 216, 0.12);
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 767px) {
+
+    .profile-card {
+        margin-bottom: 10px;
+    }
+
+}
+
+</style>
+
+{% endblock %}

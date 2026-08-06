@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter une actualité{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Ajouter une actualité</h2>
+    <form method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">
+            Titre
+        </label>
+
+        {{ form.titre }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">
+            Contenu
+        </label>
+
+        {{ form.contenu }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">
+            Image
+        </label>
+
+        {{ form.image }}
+
+        <small class="text-muted">
+            Facultatif
+        </small>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">
+            Vidéo
+        </label>
+
+        {{ form.video }}
+
+        <small class="text-muted">
+            Facultatif
+        </small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Publier l'actualité
+    </button>
+
+</form>
+</div>
+{% endblock %}

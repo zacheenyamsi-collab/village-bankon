@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5">
+
+```
+<div class="row justify-content-center">
+
+    <div class="col-lg-9">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-primary text-white py-3">
+                <h3 class="mb-0">
+                    <i class="bi bi-pencil-square"></i>
+                    Modifier l'actualité
+                </h3>
+            </div>
+
+            <div class="card-body p-4">
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                            {{ message }}
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                            ></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- ================================================= -->
+                    <!-- TITRE -->
+                    <!-- ================================================= -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-bold">
+                            Titre de l'actualité
+                        </label>
+
+                        {{ form.titre }}
+
+                        {% if form.titre.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.titre.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- CONTENU -->
+                    <!-- ================================================= -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-bold">
+                            Contenu
+                        </label>
+
+                        {{ form.contenu }}
+
+                        {% if form.contenu.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.contenu.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- IMAGE -->
+                    <!-- ================================================= -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-bold">
+                            Image
+                        </label>
+
+
+                        {% if actualite.image %}
+
+                            <div class="card bg-light mb-3">
+
+                                <div class="card-body">
+
+                                    <p class="fw-bold mb-2">
+                                        Image actuelle
+                                    </p>
+
+                                    <img
+                                        src="{{ actualite.image.url }}"
+                                        alt="{{ actualite.titre }}"
+                                        class="img-fluid rounded shadow-sm"
+                                        style="
+                                            max-height: 300px;
+                                            width: auto;
+                                        "
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {{ form.image }}
+
+                        {% if actualite.image %}
+                            <div class="form-text">
+                                Sélectionnez une nouvelle image
+                                uniquement si vous souhaitez remplacer
+                                l'image actuelle.
+                            </div>
+                        {% else %}
+                            <div class="form-text">
+                                Vous pouvez ajouter une image à cette
+                                actualité.
+                            </div>
+                        {% endif %}
+
+
+                        {% if form.image.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.image.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- VIDEO -->
+                    <!-- ================================================= -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-bold">
+                            Vidéo
+                        </label>
+
+
+                        {% if actualite.video %}
+
+                            <div class="card bg-light mb-3">
+
+                                <div class="card-body">
+
+                                    <p class="fw-bold mb-2">
+                                        Vidéo actuelle
+                                    </p>
+
+                                    <video
+                                        controls
+                                        class="w-100 rounded shadow-sm"
+                                        style="max-height: 400px;"
+                                    >
+
+                                        <source
+                                            src="{{ actualite.video.url }}"
+                                        >
+
+                                        Votre navigateur ne supporte pas
+                                        la lecture de cette vidéo.
+
+                                    </video>
+
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {{ form.video }}
+
+
+                        {% if actualite.video %}
+                            <div class="form-text">
+                                Sélectionnez une nouvelle vidéo
+                                uniquement si vous souhaitez remplacer
+                                la vidéo actuelle.
+                            </div>
+                        {% else %}
+                            <div class="form-text">
+                                Vous pouvez ajouter une vidéo à cette
+                                actualité.
+                            </div>
+                        {% endif %}
+
+
+                        {% if form.video.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.video.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- BOUTONS -->
+                    <!-- ================================================= -->
+
+                    <div class="border-top pt-4 mt-4">
+
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+                                <i class="bi bi-check-circle"></i>
+                                Enregistrer les modifications
+                            </button>
+
+
+                            <a
+                                href="{% url 'actualites' %}"
+                                class="btn btn-secondary"
+                            >
+                                <i class="bi bi-arrow-left"></i>
+                                Annuler
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

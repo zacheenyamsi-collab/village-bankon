@@ -1,0 +1,688 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Administration - Village BANKON</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        body {
+            background: #f5f7fb;
+            font-family: Arial, sans-serif;
+        }
+
+        /* ================================
+           SIDEBAR
+        ================================= */
+
+        .sidebar {
+            min-height: 100vh;
+            background: #0d1b2a;
+            color: white;
+            position: fixed;
+            width: 250px;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 20px 15px;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 15px 0 30px;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            color: #8fa3b8;
+            text-transform: uppercase;
+            margin: 20px 10px 8px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #dce6f1;
+            text-decoration: none;
+            padding: 11px 13px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover {
+            background: #1b365d;
+            color: white;
+        }
+
+        .sidebar .active {
+            background: #0d6efd;
+            color: white;
+        }
+
+        /* ================================
+           CONTENU
+        ================================= */
+
+        .main {
+            margin-left: 250px;
+            padding: 25px;
+        }
+
+        /* ================================
+           TOPBAR
+        ================================= */
+
+        .topbar {
+            background: white;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* ================================
+           STATISTIQUES
+        ================================= */
+
+        .stat-card {
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            transition: 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .blue {
+            background: #e7f0ff;
+        }
+
+        .green {
+            background: #e7f8ee;
+        }
+
+        .orange {
+            background: #fff2df;
+        }
+
+        .purple {
+            background: #f1e8ff;
+        }
+
+        .red {
+            background: #ffe8e8;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .stat-title {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        /* ================================
+           CARTES
+        ================================= */
+
+        .admin-card {
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 25px;
+            height: 100%;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .admin-card h5 {
+            font-weight: bold;
+        }
+
+        .admin-card p {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                min-height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     MENU ADMINISTRATEUR
+====================================================== -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        🏛️ Village BANKON
+    </div>
+
+
+    <div class="menu-title">
+        Administration
+    </div>
+
+    <a href="{% url 'admin_page' %}" class="active">
+        📊 Tableau de bord
+    </a>
+
+
+    <div class="menu-title">
+        Gestion
+    </div>
+
+    <a href="{% url 'afficher_personnels' %}">
+        👥 Personnels
+    </a>
+
+    <a href="{% url 'ajoute_village' %}">
+        🏘️ Villages
+    </a>
+
+    <a href="{% url 'ajoute_metier' %}">
+        💼 Métiers
+    </a>
+
+    <a href="{% url 'actualites' %}">
+        📰 Actualités
+    </a>
+
+
+    <div class="menu-title">
+        Site
+    </div>
+
+    <a href="{% url 'pagea' %}">
+        🏠 Voir le site
+    </a>
+
+    <a href="{% url 'deconnexion' %}" class="text-danger">
+        🚪 Déconnexion
+    </a>
+
+</div>
+
+
+
+<!-- =====================================================
+     CONTENU PRINCIPAL
+====================================================== -->
+
+<div class="main">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h4 class="mb-0">
+                    Tableau de bord
+                </h4>
+
+                <small class="text-muted">
+                    Gestion de Village BANKON
+                </small>
+
+            </div>
+
+            <div>
+
+                <span class="badge bg-primary">
+                    🔐 Administrateur
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         STATISTIQUES
+    ================================================== -->
+
+    <div class="row g-4 mb-4">
+
+
+        <!-- PERSONNELS -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    👥
+                </div>
+
+                <div class="stat-number">
+                    {{ nombre_personnels }}
+                </div>
+
+                <div class="stat-title">
+                    Personnels enregistrés
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- VILLAGES -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    🏘️
+                </div>
+
+                <div class="stat-number">
+                    {{ nombre_villes }}
+                </div>
+
+                <div class="stat-title">
+                    Villages
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MÉTIERS -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon orange">
+                    💼
+                </div>
+
+                <div class="stat-number">
+                    {{ nombre_metiers }}
+                </div>
+
+                <div class="stat-title">
+                    Métiers
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTUALITÉS -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    📰
+                </div>
+
+                <div class="stat-number">
+                    {{ nombre_actualites }}
+                </div>
+
+                <div class="stat-title">
+                    Actualités
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         GESTION DU CONTENU
+    ================================================== -->
+
+    <h5 class="mb-3">
+        Gestion du contenu
+    </h5>
+
+
+    <div class="row g-4">
+
+
+        <!-- PERSONNELS -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="admin-card">
+
+                <div class="stat-icon blue">
+                    👥
+                </div>
+
+                <h5>
+                    Gestion des personnels
+                </h5>
+
+                <p>
+                    Ajouter, consulter, modifier ou supprimer
+                    les personnels enregistrés.
+                </p>
+
+                <div class="d-grid gap-2">
+
+                    <a
+                        href="{% url 'afficher_personnels' %}"
+                        class="btn btn-primary"
+                    >
+                        👥 Liste des personnels
+                    </a>
+
+                    <a
+                        href="{% url 'inscription_custom' %}"
+                        class="btn btn-outline-primary"
+                    >
+                        ➕ Ajouter un personnel
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- VILLAGES -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="admin-card">
+
+                <div class="stat-icon green">
+                    🏘️
+                </div>
+
+                <h5>
+                    Gestion des villages
+                </h5>
+
+                <p>
+                    Ajouter et gérer les informations
+                    relatives aux villages.
+                </p>
+
+                <div class="d-grid gap-2">
+
+                    <a
+                        href="{% url 'infot' %}"
+                        class="btn btn-success"
+                    >
+                        🏘️ Voir les villages
+                    </a>
+
+                    <a
+                        href="{% url 'ajoute_village' %}"
+                        class="btn btn-outline-success"
+                    >
+                        ➕ Ajouter un village
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- MÉTIERS -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="admin-card">
+
+                <div class="stat-icon orange">
+                    💼
+                </div>
+
+                <h5>
+                    Gestion des métiers
+                </h5>
+
+                <p>
+                    Gérer les métiers disponibles et
+                    leurs niveaux requis.
+                </p>
+
+                <div class="d-grid gap-2">
+
+                    <a
+                        href="{% url 'affiche_metier' %}"
+                        class="btn btn-warning"
+                    >
+                        💼 Voir les métiers
+                    </a>
+
+                    <a
+                        href="{% url 'ajoute_metier' %}"
+                        class="btn btn-outline-warning"
+                    >
+                        ➕ Ajouter un métier
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ACTUALITÉS -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="admin-card">
+
+                <div class="stat-icon purple">
+                    📰
+                </div>
+
+                <h5>
+                    Gestion des actualités
+                </h5>
+
+                <p>
+                    Publier, modifier et supprimer les
+                    actualités du village.
+                </p>
+
+                <div class="d-grid gap-2">
+
+                    <a
+                        href="{% url 'actualites' %}"
+                        class="btn btn-primary"
+                    >
+                        📰 Voir les actualités
+                    </a>
+
+                    <a
+                        href="{% url 'ajouter_actualite' %}"
+                        class="btn btn-outline-primary"
+                    >
+                        ➕ Nouvelle actualité
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- COMPTES -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="admin-card">
+
+                <div class="stat-icon red">
+                    👤
+                </div>
+
+                <h5>
+                    Comptes utilisateurs
+                </h5>
+
+                <p>
+                    Nombre de comptes utilisateurs enregistrés
+                    dans le système.
+                </p>
+
+                <div class="d-grid">
+
+                    <button
+                        class="btn btn-danger"
+                        disabled
+                    >
+                        👤 {{ nombre_utilisateurs }} comptes
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SITE -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="admin-card">
+
+                <div class="stat-icon green">
+                    🌐
+                </div>
+
+                <h5>
+                    Accès au site
+                </h5>
+
+                <p>
+                    Retourner sur le site public
+                    Village BANKON.
+                </p>
+
+                <div class="d-grid">
+
+                    <a
+                        href="{% url 'pagea' %}"
+                        class="btn btn-success"
+                    >
+                        🏠 Ouvrir le site
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PIED DE PAGE
+    ================================================== -->
+
+    <div class="text-center mt-5">
+
+        <a
+            href="{% url 'deconnexion' %}"
+            class="btn btn-outline-danger"
+        >
+            🚪 Déconnexion
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>

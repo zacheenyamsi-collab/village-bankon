@@ -1,0 +1,450 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5">
+
+```
+<div class="card shadow-sm">
+
+    <div class="card-header bg-primary text-white text-center">
+        <h3 class="mb-0">Inscription</h3>
+    </div>
+
+    <div class="card-body p-4">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="row">
+
+                <!-- ========================= -->
+                <!-- COLONNE GAUCHE -->
+                <!-- ========================= -->
+
+                <div class="col-md-6">
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Nom <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="nom"
+                            class="form-control"
+                            placeholder="Nom complet"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Téléphone <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="tel"
+                            class="form-control"
+                            placeholder="Numéro de téléphone"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Adresse e-mail <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            name="gmail"
+                            class="form-control"
+                            placeholder="exemple@gmail.com"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Date de naissance <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            name="daten"
+                            class="form-control"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Niveau d'étude <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="niveaup"
+                            class="form-control"
+                            placeholder="Ex : Baccalauréat, Licence..."
+                            required
+                        >
+                    </div>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- COLONNE DROITE -->
+                <!-- ========================= -->
+
+                <div class="col-md-6">
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Famille <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="famille"
+                            class="form-control"
+                            placeholder="Nom de la famille"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Résidence <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="residence"
+                            class="form-control"
+                            placeholder="Lieu de résidence"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Ville <span class="text-danger">*</span>
+                        </label>
+
+                        <select
+                            name="ville"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                -- Sélectionner une ville --
+                            </option>
+
+                            {% for ville in villes %}
+
+                                <option value="{{ ville.nomv }}">
+                                    {{ ville.nomv }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ========================= -->
+                    <!-- METIERS -->
+                    <!-- ========================= -->
+
+                    <div class="mb-3">
+
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+
+                            <label class="form-label mb-0">
+                                Métier(s) <span class="text-danger">*</span>
+                            </label>
+
+                            <button
+                                type="button"
+                                id="ajouter-metier"
+                                class="btn btn-success btn-sm"
+                            >
+                                <strong>+</strong> Ajouter
+                            </button>
+
+                        </div>
+
+
+                        <div id="metiers-container">
+
+                            <!-- Premier métier -->
+
+                            <div class="input-group mb-2 metier-ligne">
+
+                                <select
+                                    name="metier[]"
+                                    class="form-select metier-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        -- Sélectionner un métier --
+                                    </option>
+
+                                    {% for metier in metiers %}
+
+                                        <option value="{{ metier.nomm }}">
+                                            {{ metier.nomm }}
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <small class="text-muted">
+                            Cliquez sur « + Ajouter » pour sélectionner
+                            plusieurs métiers.
+                        </small>
+
+                    </div>
+
+
+                    <!-- ========================= -->
+                    <!-- CV -->
+                    <!-- ========================= -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            CV
+                        </label>
+
+                        <input
+                            type="file"
+                            name="cv"
+                            class="form-control"
+                            accept=".pdf,.doc,.docx"
+                        >
+
+                        <small class="text-muted">
+                            Formats acceptés : PDF, DOC, DOCX.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- BOUTONS -->
+            <!-- ========================= -->
+
+            <hr class="my-4">
+
+            <div class="text-center">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary px-5 me-2"
+                >
+                    S'inscrire
+                </button>
+
+                <a
+                    href="{% url 'connexion' %}"
+                    class="btn btn-secondary px-4"
+                >
+                    Se connecter
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- ======================================================== -->
+
+<!-- JAVASCRIPT : AJOUT DYNAMIQUE DES METIERS -->
+
+<!-- ======================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const boutonAjouter = document.getElementById("ajouter-metier");
+    const container = document.getElementById("metiers-container");
+
+    boutonAjouter.addEventListener("click", function () {
+
+        // Créer une nouvelle ligne
+        const ligne = document.createElement("div");
+
+        ligne.className = "input-group mb-2 metier-ligne";
+
+        // Construire le select
+        ligne.innerHTML = `
+            <select
+                name="metier[]"
+                class="form-select metier-select"
+                required
+            >
+
+                <option value="">
+                    -- Sélectionner un métier --
+                </option>
+
+                {% for metier in metiers %}
+
+                    <option value="{{ metier.nomm }}">
+                        {{ metier.nomm }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button
+                type="button"
+                class="btn btn-outline-danger supprimer-metier"
+                title="Supprimer ce métier"
+            >
+                −
+            </button>
+        `;
+
+        container.appendChild(ligne);
+
+        mettreAJourMetiers();
+
+    });
+
+
+    // Supprimer une ligne de métier
+    container.addEventListener("click", function (event) {
+
+        if (
+            event.target.classList.contains("supprimer-metier")
+        ) {
+
+            const ligne = event.target.closest(".metier-ligne");
+
+            if (ligne) {
+
+                ligne.remove();
+
+                mettreAJourMetiers();
+
+            }
+
+        }
+
+    });
+
+
+    // Éviter de sélectionner deux fois le même métier
+    function mettreAJourMetiers() {
+
+        const selects = document.querySelectorAll(
+            ".metier-select"
+        );
+
+        const valeursSelectionnees = [];
+
+        selects.forEach(function (select) {
+
+            if (select.value !== "") {
+
+                valeursSelectionnees.push(
+                    select.value
+                );
+
+            }
+
+        });
+
+
+        selects.forEach(function (select) {
+
+            const valeurActuelle = select.value;
+
+            Array.from(select.options).forEach(
+                function (option) {
+
+                    if (
+                        option.value !== "" &&
+                        option.value !== valeurActuelle &&
+                        valeursSelectionnees.includes(
+                            option.value
+                        )
+                    ) {
+
+                        option.disabled = true;
+
+                    } else {
+
+                        option.disabled = false;
+
+                    }
+
+                }
+            );
+
+        });
+
+    }
+
+
+    // Vérification lorsqu'un métier est sélectionné
+    container.addEventListener("change", function (event) {
+
+        if (
+            event.target.classList.contains("metier-select")
+        ) {
+
+            mettreAJourMetiers();
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

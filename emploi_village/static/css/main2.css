@@ -1,0 +1,20 @@
+		.ul {
+			list-style: none; /* Supprime les puces par défaut */
+			padding: 0;
+			margin: 0;
+			display: flex; /* Utilise flexbox pour centrer horizontalement */
+			justify-content: center; /* Centre les éléments horizontalement */
+			flex-wrap: wrap; /* Permet de passer à la ligne si nécessaire */
+		}
+		.li {
+			background-color: #45a049; /* Couleur de fond, à personnaliser */
+			border-radius: 10px; /* Bords arrondis */
+			padding: 10px 20px; /* Espacement intérieur */
+			margin: 10px; /* Espacement entre les éléments */
+			text-align: center; /* Centre le texte à l'intérieur */
+			min-width: 80px; /* Largeur minimale, à ajuster selon besoin */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optionnel, pour un peu de relief */
+		}

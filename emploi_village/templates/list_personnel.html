@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- ✅ Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">
+        👷‍♂️ Liste du Personnel Qualifié
+        {% if metier_nom %}
+            <br><small class="text-muted">pour le métier : {{ metier_nom }}</small>
+        {% endif %}
+    </h1>
+
+    {% if list_personnel %}
+        <ul class="list-group">
+            {% for personnel in list_personnel %}
+                <li class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
+                    <div>
+                        NOM:<strong>👷‍♂️ {{ personnel.nom }}</strong><br>
+                        RESIDENCE:<strong><span><i class="bi bi-geo-alt-fill"></i> {{ personnel.residence }}</span></strong><br>
+                        NIVEAU:<strong><span><i class="bi bi-mortarboard"></i> {{ personnel.niveaup }}</span></strong><br>
+                        CONTACT:<strong><span>📞 +237 697 99 42 10 / 681 53 64 45 / 621 04 84 00</span></strong>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            Aucun personnel trouvé pour ce métier.
+        </div>
+    {% endif %}
+</div>
+<div class="text-center mt-4">
+    <a href="javascript:history.back()" class="btn btn-info text-white" style="border-radius: 10px; padding: 10px 20px;">
+        ⬅ Retour
+    </a>
+</div>
+<!-- ✅ Bootstrap JS (si nécessaire) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}

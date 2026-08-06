@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="auto">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Village BANKON</title>
+
+  <!-- ✅ Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ✅ Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<!-- ✅ Barre de navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="{% static 'image/logo.jpg' %}" alt="Logo" height="40" class="me-2 rounded">
+      <span class="fw-bold text-primary">Village BANKON</span>
+    </a>
+
+    <!-- ✅ Bouton burger -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- ✅ Liens de navigation -->
+    <div class="collapse navbar-collapse" id="menuPrincipal">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a href="{% url 'affiche_metier' %}" class="nav-link btn btn-outline-primary btn-sm">Recherche d'employé</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link btn btn-outline-primary btn-sm">Fonctionnaire</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'infot' %}" class="nav-link btn btn-outline-primary btn-sm">Infos Village</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'connexion' %}" class="nav-link btn btn-outline-primary btn-sm">Connexion</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'inscription_custom' %}" class="nav-link btn btn-outline-primary btn-sm">Inscription</a>
+        </li>
+        <li class="nav-item">
+         <a class="nav-link" href="{% url 'actualites' %}">Actualités</a>
+        </li>
+
+        <li>
+           <!-- <a href="/dashboard/" class="btn btn-outline-primary btn-sm">Statistiques</a>-->
+        </li>
+      </ul>
+
+      <!-- ✅ Bouton mode sombre -->
+      <button id="darkModeToggle" class="btn btn-sm btn-outline-secondary ms-lg-3">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ✅ Corps -->
+<main class="container my-4 flex-grow-1">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8 text-center">
+      <h2 class="mb-4">🔎 Recherche d'emploi</h2>
+
+      <div id="carouselMetiers" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-inner">
+          {% for image in images %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <div class="d-flex justify-content-center align-items-center" style="height: 400px;">
+                <img src="{% static 'image/' %}{{ image.fichier }}"
+                     class="d-block mx-auto img-fluid"
+                     style="max-height: 100%; max-width: 100%; object-fit: contain;"
+                     alt="{{ image.nom }}">
+              </div>
+              <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                <h5>{{ image.nom }}</h5>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselMetiers" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Précédent</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselMetiers" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Suivant</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ✅ Pied de page -->
+<footer class="bg-dark text-light text-center py-4 mt-auto">
+  <div class="container">
+    <p>📧 <a href="mailto:cedricnyacke@gmail.com" class="text-white text-decoration-none">cedricnyacke@gmail.com</a></p>
+    <p>📞 +237 697 99 42 10 / 681 53 64 45 / 621 04 84 00</p>
+    <p>📍 KAKE, Moungo, Littoral, Cameroun</p>
+  </div>
+</footer>
+
+<!-- ✅ Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ✅ Script Mode Sombre -->
+<script>
+  const toggle = document.getElementById("darkModeToggle");
+  toggle.addEventListener("click", () => {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute("data-bs-theme");
+    html.setAttribute("data-bs-theme", currentTheme === "dark" ? "light" : "dark");
+    toggle.textContent = currentTheme === "dark" ? "🌙" : "☀️";
+  });
+</script>
+
+</body>
+</html>
