@@ -29,3 +29,9 @@ media/
 # Fichiers système
 Thumbs.db
 .DS_Store
+__pycache__/
+*.py[cod]
+*.sqlite3
+.env
+staticfiles/
+media/
